@@ -54,14 +54,7 @@ board.on('ready', () => {
     console.log(luxmeter.value);
     
     });
-
-    const values = [];
-
-    values.push(luxmeter.value);
-    let sum = values.reduce((acc, val) => acc + val, 0);
-    let avg = sum / values.length;
-    console.log("avg : "+ avg);
-
+  
     app.get('/ldr', (req, res) => {
         res.send(ldrvalue.toString());
         });
