@@ -119,4 +119,11 @@ document.addEventListener('DOMContentLoaded', function () {
           .catch(function (err) {
               console.log(err)
           });
+          const values = [];
+
+          values.push(sensorData);
+          let sum = values.reduce((acc, val) => acc + val, 0);
+          let avg = sum / values.length;
+          console.log(avg);
   },500)});
+
