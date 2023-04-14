@@ -32,11 +32,13 @@ app.get('/manual', (req, res) => {
 
 
 const board = new five.Board({
-  port: 'COM6'
+  port: 'COM7'
 });
 
 let led;
 let luxmeter;
+const data = [];
+let average = 0;
 
 board.on('ready', () => {
   // Define the LED pin
@@ -53,22 +55,22 @@ board.on('ready', () => {
     ldrvalue = (luxmeter.value /1024) *100;
     console.log(luxmeter.value);
     
+    if (data.length === 10) {
+      data.shift();
+    }
+    data.push(luxmeter.value);
+    const sum = data.reduce((acc, val) => acc + val, 0);
+    average = sum / data.length;
+    console.log('Sensor value: ' + data + ', Average: ' + average);
     });
-
-    const values = [];
-
-    values.push(luxmeter.value);
-    let sum = values.reduce((acc, val) => acc + val, 0);
-    let avg = sum / values.length;
-    console.log("avg : "+ avg);
-
+    
     app.get('/ldr', (req, res) => {
-        res.send(ldrvalue.toString());
+        res.send(average.toString());
         });
 
         app.get('/sensor', (req, res, next) => {
             res.json({
-                sensor: parseFloat( ((luxmeter?.value / 1024) * 100)+'').toFixed(2)
+                average: parseFloat( ((average / 1024) * 100)+'').toFixed(2)
             });
         });
 

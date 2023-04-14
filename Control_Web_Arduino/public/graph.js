@@ -113,8 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
               return res.json();
           })
           .then((data) => {
-              sensorData = data.sensor;
-              sensorText.innerText = data.sensor + " %";
+              sensorData = data.average;
+              sensorText.innerText = data.average + " %";
           })
           .catch(function (err) {
               console.log(err)

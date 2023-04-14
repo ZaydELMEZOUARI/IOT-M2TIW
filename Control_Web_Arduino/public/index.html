@@ -144,7 +144,7 @@ setInterval(() => {
 fetch('/ldr')
 .then(response => response.text())
 .then(data => {
-  document.getElementById('ldr-value').innerText = data;
+  document.getElementById('average').innerText = data;
 })
 .catch(error => console.error(error));
 }, 100);
