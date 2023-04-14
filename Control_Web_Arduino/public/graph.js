@@ -119,6 +119,4 @@ document.addEventListener('DOMContentLoaded', function () {
           .catch(function (err) {
               console.log(err)
           });
-         
   },500)});
-
