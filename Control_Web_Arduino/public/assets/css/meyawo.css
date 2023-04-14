@@ -12232,3 +12232,41 @@ pre .code {
 .section-lg {
   padding: 100px 0 !important;
 }
+
+@mixin flexbox-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+html,body {
+  height: 100%;  
+}
+
+body {
+  @include flexbox-center;
+}
+
+#wrap {
+  width: 500px;
+  height: 250px;
+  
+  border: 1px solid lightgrey;
+}
+
+.axis {
+  font: 12px  sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #B0BEC5;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke: #FF5722;
+  stroke-width: 1px;
+}
