@@ -65,13 +65,13 @@ board.on('ready', () => {
     });
     
     app.get('/ldr', (req, res) => {
-        res.send(average.toString());
+        res.send(ldrvalue.toString());
         });
 
-        app.get('/sensor', (req, res, next) => {
-            res.json({
-                average: parseFloat( ((average / 1024) * 100)+'').toFixed(2)
-            });
+    app.get('/sensor', (req, res, next) => {
+        res.json({
+          average: parseFloat( ((average / 1024) * 100)+'').toFixed(2)
+         });
         });
 
   // Start the server
