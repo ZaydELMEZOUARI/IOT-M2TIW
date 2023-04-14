@@ -85,7 +85,7 @@ function draw(selection) {
   })
 }
 
-const wrapper = d3.select("#wrap");
+const wrapper = d3.select("#TESTGRAPH");
 
 d3.interval(() => {  
   coords.unshift({
