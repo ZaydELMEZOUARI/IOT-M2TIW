@@ -12358,15 +12358,6 @@ body {
 
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 
-body {
-	display: flex;
-	height: 100vh;
-	font-family: 'Roboto', sans-serif;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-
 .container2 {
   height: 500px;
 	width: 500px;
