@@ -90,9 +90,11 @@
             <!-- row -->
             <div class="about-caption">
               <p>
+                <div id="wrap"></div> 
+                <br><br>
                 <h1>LDR Value: </h1>
                 <h6 class="section-title mb-6"><span id="ldr-value"></span></h6>
-                <div id="wrap"></div> 
+                
               </p>
           </div>              
         </div><!-- end of container -->
@@ -132,24 +134,23 @@
               socket.emit('led', { value: newValue });}
       
       function turnOn() {
-  fetch('/manual');
-clearInterval();
-}
-function auto(){
-      setInterval(turnOff, 500);
-}
+        fetch('/manual');
+        clearInterval();
+        }
+      function auto(){
+        setInterval(turnOff, 500);
+        }
       function turnOff() {
-  fetch('/automatic');
-
-}
-setInterval(() => {
-fetch('/ldr')
-.then(response => response.text())
-.then(data => {
-  document.getElementById('average').innerText = data;
-})
-.catch(error => console.error(error));
-}, 100);
+        fetch('/automatic');
+        }
+      setInterval(() => {
+        fetch('/ldr')
+        .then(response => response.text())
+        .then(data => {
+        document.getElementById('ldr-value').innerText = data;
+       })
+        .catch(error => console.error(error));
+       }, 100);
 
 </script> 
     <!-- bootstrap 3 affix -->

@@ -1,3 +1,4 @@
+const { json } = require('d3');
 const express = require('express');
 const five = require('johnny-five');
 
@@ -39,6 +40,7 @@ let led;
 let luxmeter;
 const data = [];
 let average = 0;
+let ldrValue2 = 0;
 
 board.on('ready', () => {
   // Define the LED pin
@@ -53,6 +55,7 @@ board.on('ready', () => {
   luxmeter.on("data", function(){
 
     ldrvalue = (luxmeter.value /1024) *100;
+    ldrValue2 = luxmeter.value;
     console.log(luxmeter.value);
     
     if (data.length === 10) {
@@ -63,9 +66,9 @@ board.on('ready', () => {
     average = sum / data.length;
     console.log('Sensor value: ' + data + ', Average: ' + average);
     });
-    
+  
     app.get('/ldr', (req, res) => {
-        res.send(ldrvalue.toString());
+        res.send(ldrValue2.toString());
         });
 
     app.get('/sensor', (req, res, next) => {
