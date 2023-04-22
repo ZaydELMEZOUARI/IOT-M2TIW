@@ -1,6 +1,11 @@
 let sunrise;
 let sunset;
-let sunriseStr, sunsetStr, strTime;
+let sunriseStr, sunsetStr, strTime, local_time;
+
+const sunrise_time = document.querySelector('#sunrise-time');
+const sunset_time = document.querySelector('#sunset-time');
+const viewer = document.querySelector('#view-info');
+
 let time = new Date(Date.now());
 
 function auto_on_off() {
@@ -8,7 +13,7 @@ function auto_on_off() {
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             let positionInfo = "Current Position is (" + "Latitude: " + position.coords.latitude + ", " + "Longitude: " + position.coords.longitude + ")";
-            document.getElementById("result").innerHTML = positionInfo;
+            //document.getElementById("result").innerHTML = positionInfo;
             fetch(`https://api.sunrise-sunset.org/json?lat=${position.coords.latitude}&lng=${position.coords.longitude}&date=today`,
                 {
                     method: 'GET',
@@ -20,48 +25,21 @@ function auto_on_off() {
                     console.log(data);
                     sunrise = data.results.sunrise.split(" ")[0];
                     sunset = data.results.sunset.split(" ")[0];
-                    console.log(time.toTimeString().split(" ")[0]);
+                    local_time = time.toTimeString().split(" ")[0];
+                    console.log(`Actual time : ${local_time}`);
+                    console.log(`Sunrise Time : ${sunrise} and Sunset Time : ${sunset}`)
 
-                    //convert values in miliseconds to facilitate the comparison
-                    sunriseStr =  sunrise.split(':');
-                    sunsetStr =  sunset.split(':');
-                    strTime =  time.toTimeString().split(" ")[0].split(':');
+                    //insert value in our html visual
+                    sunrise_time.innerHTML = sunrise;
+                    sunset_time.innerHTML = sunset;
 
-                    totalSeconds1 = parseInt(sunriseStr[0] * 3600 + sunriseStr[1] * 60 + sunriseStr[0]);
-                    totalSeconds2 = parseInt(sunsetStr[0] * 3600 + sunsetStr[1] * 60 + sunsetStr[0]);
-                    totalSeconds3 = parseInt(strTime[0] * 3600 + strTime[1] * 60 + strTime[0]);
-
-                    console.log("Sunrise value : " + sunrise + "Sunset value : " + sunset);
-
-                    //compare value to turn on/off light based on the time of the day
-                    if(totalSeconds1 < strTime && totalSeconds2 > strTime){
-                        /*if the sunrise value is less than the actual time and the sunset time is greater than actual time; means that the sun is still sleeping
-                        and so, the light will be put on auto; meaning at night time the light will turn on
-                        when either detecting a mouvement, or set in a dark place*/
-                        fetch(baseUri+'/manual;',
-                            {
-                                method: 'POST',
-                            })
-                            .then((res) => {
-                                return res.text();
-                            })
-                            .then((data) => console.log(data))
-                            .catch(function (err) {
-                                console.log(err)
-                            });
+                    //comparing value
+                    if(sunrise < local_time && sunset > local_time){
+                        //When sun is up, change the viewer text
+                        viewer.innerHTML = "SUN UP";
                     }else{
-                        //Set the light on auto during the day; making the led blink
-                        fetch(baseUri+'/auto',
-                            {
-                                method: 'POST',
-                            })
-                            .then((res) => {
-                                return res.text();
-                            })
-                            .then((data) => console.log(data))
-                            .catch(function (err) {
-                                console.log(err)
-                        });
+                        //And when sun down, change accordingly
+                        viewer.innerHTML = "SUN DOWN";
                     }
 
                 })
@@ -76,5 +54,7 @@ function auto_on_off() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    auto_on_off();
+    
+    setTimeout(function(){auto_on_off()}, 500);
+    //auto_on_off();
 });

@@ -33,7 +33,7 @@ app.get('/manual', (req, res) => {
 
 
 const board = new five.Board({
-  port: 'COM8'
+  port: 'COM7'
 });
 
 let led;
