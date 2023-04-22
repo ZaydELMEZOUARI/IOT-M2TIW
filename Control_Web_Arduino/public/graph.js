@@ -71,7 +71,7 @@ function draw(selection) {
       .attr('class', 'x axis')
       .call(xAxis);
     
-    const g = svg.select("g")     // real g elem
+    const g = svg.select("g")  
       .attr('transform', `translate(${margin.left},${margin.top})`)
 
     g.select("path.line")
@@ -85,7 +85,7 @@ function draw(selection) {
   })
 }
 
-const wrapper = d3.select("#TESTGRAPH");
+const wrapper = d3.select("#wrap");
 
 d3.interval(() => {  
   coords.unshift({
